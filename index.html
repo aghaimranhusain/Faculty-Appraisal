@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Faculty Performance Appraisal Proforma | Manav Rachna</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+:root{--navy:#0d3b66;--navy-deep:#082840;--teal:#1a6b6b;--gold:#c9a227;--cream:#f7f1e3;--soft:#f0f5fa;--alt:#e4edf5;--border:#c8d4e0;--text:#1a2332;--muted:#5a6a7e;--danger:#b53a3a;--ok:#1d7a4a;--shadow:0 6px 24px rgba(13,59,102,.08);--radius:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,sans-serif;color:var(--text);background:linear-gradient(165deg,#e8f0f8 0%,#f6f4ef 50%,#eaf3f2 100%);min-height:100vh;line-height:1.45;font-size:15px}
+.topbar{background:var(--navy);color:#fff;padding:.55rem 1.1rem;display:flex;justify-content:space-between;align-items:center;gap:.75rem;flex-wrap:wrap;position:sticky;top:0;z-index:60;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.topbar .brand{font-size:.8rem;opacity:.9}
+.topbar .actions{display:flex;gap:.4rem;flex-wrap:wrap}
+.topbar button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;padding:.35rem .75rem;border-radius:7px;font-size:.78rem;cursor:pointer;font-family:inherit}
+.topbar button:hover{background:rgba(255,255,255,.22)}
+.topbar button.primary{background:var(--gold);color:var(--navy-deep);border-color:var(--gold);font-weight:600}
+.wrap{max-width:980px;margin:0 auto;padding:1.25rem .9rem 3.5rem}
+.hero{background:var(--navy);color:#fff;border-radius:var(--radius);padding:1.4rem 1.35rem;margin-bottom:1rem;box-shadow:var(--shadow);display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+.hero-left{flex:1;min-width:220px}
+.hero .formno{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;opacity:.75;margin-bottom:.25rem}
+.hero h1{font-family:"Instrument Serif",Georgia,serif;font-size:clamp(1.35rem,3.5vw,1.85rem);font-weight:400;line-height:1.2}
+.hero .sub{font-size:.88rem;opacity:.85;margin-top:.25rem}
+.hero-badge{background:rgba(201,162,39,.2);border:1px solid rgba(201,162,39,.45);color:var(--gold);padding:.45rem .85rem;border-radius:8px;font-size:.78rem;font-weight:600;text-align:center}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem 1.2rem;margin-bottom:.9rem;box-shadow:var(--shadow)}
+.card h2{font-size:1rem;color:var(--navy);margin-bottom:.75rem;display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.card h2 .badge{background:var(--navy);color:#fff;font-size:.68rem;padding:.12rem .45rem;border-radius:999px;font-weight:600}
+.card h3{font-size:.88rem;color:var(--teal);margin:.85rem 0 .45rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+@media(max-width:680px){.grid-2{grid-template-columns:1fr}}
+label{display:block;font-size:.7rem;font-weight:600;color:var(--muted);margin-bottom:.2rem;text-transform:uppercase;letter-spacing:.03em}
+input[type=text],input[type=email],input[type=number],input[type=date],select,textarea{width:100%;padding:.48rem .6rem;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:.9rem;background:#fff;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,107,107,.12)}
+textarea{min-height:70px;resize:vertical}
+.field{margin-bottom:.1rem}
+.note{font-size:.8rem;color:var(--muted);background:var(--soft);border-left:3px solid var(--teal);padding:.5rem .7rem;border-radius:0 7px 7px 0;margin:.4rem 0 .7rem}
+table.data{width:100%;border-collapse:collapse;font-size:.82rem;margin:.4rem 0}
+table.data th{background:var(--navy);color:#fff;text-align:left;padding:.4rem .5rem;font-weight:600;font-size:.72rem;text-transform:uppercase}
+table.data td{padding:.35rem .4rem;border-bottom:1px solid var(--border);vertical-align:middle}
+table.data tr:nth-child(even) td{background:var(--soft)}
+table.data input,table.data select{padding:.3rem .4rem;font-size:.82rem}
+table.data input[type=file]{font-size:.7rem;padding:.2rem;border:1px dashed var(--border);border-radius:5px;background:#fff;width:100%}
+.cat-head{background:var(--navy);color:#fff;border-radius:var(--radius) var(--radius) 0 0;padding:.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap}
+.cat-head h2{color:#fff;margin:0;font-size:.95rem}
+.cat-head .cap-pill{background:var(--gold);color:var(--navy-deep);font-size:.72rem;font-weight:700;padding:.28rem .65rem;border-radius:999px}
+.cat-body{border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);padding:.9rem 1rem 1rem;background:#fff;margin-bottom:.9rem;box-shadow:var(--shadow)}
+.item-block{border:1px solid var(--border);border-radius:8px;padding:.65rem .75rem;margin-bottom:.55rem;background:#fafcfe}
+.item-block .item-title{font-size:.86rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
+.item-block .item-hint{font-size:.75rem;color:var(--muted);margin-bottom:.45rem}
+.item-row{display:grid;grid-template-columns:110px 1fr 1fr;gap:.5rem;align-items:end}
+@media(max-width:640px){.item-row{grid-template-columns:1fr 1fr}}
+.file-name{font-size:.7rem;color:var(--ok);margin-top:.15rem;word-break:break-all}
+.subtotal{display:flex;justify-content:flex-end;align-items:center;gap:.65rem;margin-top:.7rem;padding-top:.6rem;border-top:2px solid var(--cream);font-size:.88rem;font-weight:600;color:var(--navy)}
+.subtotal .val{background:var(--cream);padding:.3rem .7rem;border-radius:7px;min-width:3.2rem;text-align:center}
+.subtotal .capped{color:var(--danger);font-size:.75rem;font-weight:500}
+.summary-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.summary-table th{background:var(--navy);color:#fff;padding:.45rem .55rem;text-align:left;font-size:.75rem}
+.summary-table td{padding:.4rem .55rem;border-bottom:1px solid var(--border)}
+.summary-table tr:nth-child(even) td{background:var(--soft)}
+.summary-table .total-row td{background:var(--navy);color:#fff;font-weight:700}
+.band-box{margin-top:.85rem;padding:.7rem .9rem;border-radius:8px;background:var(--soft);font-size:.88rem}
+.band-box strong{color:var(--navy)}
+.declare{display:flex;gap:.6rem;align-items:flex-start;padding:.75rem;background:var(--soft);border-radius:8px;margin:.65rem 0;font-size:.86rem}
+.declare input{margin-top:.15rem;width:1.05rem;height:1.05rem;accent-color:var(--teal)}
+.btn-row{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1rem}
+.btn{border:none;border-radius:9px;padding:.7rem 1.15rem;font-family:inherit;font-size:.88rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:0 4px 12px rgba(13,59,102,.22)}
+.btn-primary:hover{background:var(--navy-deep)}
+.btn-secondary{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-secondary:hover{background:var(--soft)}
+.btn-teal{background:var(--teal);color:#fff}
+.status{margin-top:.85rem;padding:.65rem .85rem;border-radius:8px;font-size:.85rem;display:none}
+.status.show{display:block}
+.status.ok{background:#e6f5ec;color:var(--ok);border:1px solid #b8e0c6}
+.status.err{background:#fdecea;color:var(--danger);border:1px solid #f0c2c2}
+.status.info{background:var(--soft);color:var(--navy);border:1px solid var(--border)}
+.config-box{background:#fff8e6;border:1px solid #ecd48a;border-radius:8px;padding:.75rem .9rem;margin-bottom:.9rem;font-size:.82rem}
+.nav-cats{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.9rem;position:sticky;top:44px;z-index:50;background:rgba(232,240,248,.92);backdrop-filter:blur(8px);padding:.4rem 0}
+.nav-cats a{text-decoration:none;font-size:.74rem;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--border);padding:.3rem .6rem;border-radius:999px}
+.nav-cats a:hover{border-color:var(--teal);color:var(--teal)}
+.add-row-btn{background:transparent;border:1px dashed var(--border);color:var(--teal);font-size:.78rem;font-weight:600;padding:.35rem .65rem;border-radius:7px;cursor:pointer;font-family:inherit;margin-top:.4rem}
+.add-row-btn:hover{background:var(--soft);border-color:var(--teal)}
+footer{text-align:center;font-size:.75rem;color:var(--muted);padding:1.25rem .9rem}
+.rating-select{max-width:150px}
+@media print{.topbar,.nav-cats,.config-box,.btn-row,footer{display:none!important}.card,.cat-body{box-shadow:none;break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">Form No. 1594 · Faculty Performance Appraisal · Confidential</div>
+  <div class="actions">
+    <button type="button" onclick="saveDraft()">Save draft</button>
+    <button type="button" onclick="loadDraft()">Load draft</button>
+    <button type="button" class="primary" onclick="document.getElementById('submitSection').scrollIntoView({behavior:'smooth'})">Go to submit</button>
+  </div>
+</div>
+<div class="wrap">
+<header class="hero">
+  <div class="hero-left">
+    <div class="formno">Manav Rachna · Vidyanatariksha · Form No. 1594</div>
+    <h1>Faculty Performance Appraisal Proforma</h1>
+    <p class="sub">Evidence-based self-appraisal · Attach PDF / image proofs · Category totals capped as per guidelines</p>
+  </div>
+  <div class="hero-badge">Total max<br>700 marks</div>
+</header>
+
+<div class="config-box">
+  <strong>Admin setup (optional):</strong> For online submit, get a free key from <a href="https://web3forms.com" target="_blank" rel="noopener">web3forms.com</a> and paste below. Faculty can also download a ZIP and email it.
+  <div class="grid-2" style="margin-top:.5rem">
+    <div class="field"><label for="web3key">Web3Forms Access Key</label><input type="text" id="web3key" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" autocomplete="off"/></div>
+    <div class="field"><label for="adminEmail">Admin email (shown to faculty)</label><input type="email" id="adminEmail" placeholder="appraisal@manavrachna.edu.in"/></div>
+  </div>
+</div>
+
+<nav class="nav-cats">
+  <a href="#sec-info">Particulars</a>
+  <a href="#sec-qual">Qual. &amp; FDP</a>
+  <a href="#sec-pub">Publications</a>
+  <a href="#sec-plans">Plans</a>
+  <a href="#sec-I">Cat I · Teaching</a>
+  <a href="#sec-II">Cat II · Research</a>
+  <a href="#sec-III">Cat III · Co-curricular</a>
+  <a href="#sec-IV">Cat IV · Institutional</a>
+  <a href="#sec-summary">Summary</a>
+  <a href="#submitSection">Submit</a>
+</nav>
+
+<form id="appraisalForm" novalidate>
+
+<section class="card" id="sec-info">
+  <h2><span class="badge">1–8</span> Employee particulars</h2>
+  <div class="grid-2">
+    <div class="field"><label for="academicSession">Academic session</label><input type="text" id="academicSession" placeholder="e.g. 2025–26"/></div>
+    <div class="field"><label for="periodFrom">Period from</label><input type="date" id="periodFrom"/></div>
+    <div class="field"><label for="periodTo">Period to</label><input type="date" id="periodTo"/></div>
+    <div class="field"><label for="empCode">Employee code *</label><input type="text" id="empCode" required/></div>
+    <div class="field"><label for="fullName">1. Name in full (CAPITAL LETTERS) *</label><input type="text" id="fullName" required style="text-transform:uppercase"/></div>
+    <div class="field"><label for="designation">2. Present designation *</label><input type="text" id="designation" required/></div>
+    <div class="field"><label for="department">3. Department and school *</label><input type="text" id="department" required/></div>
+    <div class="field"><label for="qualifications">4. Academic qualifications</label><input type="text" id="qualifications" placeholder="e.g. Ph.D., M.Tech."/></div>
+    <div class="field"><label for="specialization">5. Field of specialization</label><input type="text" id="specialization"/></div>
+    <div class="field"><label for="scaleOfPay">6. Present scale of pay</label><input type="text" id="scaleOfPay"/></div>
+    <div class="field"><label for="basicPay">7. Present basic pay</label><input type="text" id="basicPay"/></div>
+    <div class="field"><label for="email">Email *</label><input type="email" id="email" required/></div>
+    <div class="field"><label for="phone">Mobile</label><input type="text" id="phone"/></div>
+    <div class="field"><label for="joiningDate">Date of joining</label><input type="date" id="joiningDate"/></div>
+  </div>
+  <h3>8. Leave availed during the period</h3>
+  <table class="data">
+    <thead><tr><th>Nature of leave</th><th style="width:140px">Number of days</th></tr></thead>
+    <tbody>
+      <tr><td>Casual leave</td><td><input type="number" min="0" id="leave_casual" value="0"/></td></tr>
+      <tr><td>Earned / Vacation leave</td><td><input type="number" min="0" id="leave_earned" value="0"/></td></tr>
+      <tr><td>Academic / Duty leave</td><td><input type="number" min="0" id="leave_academic" value="0"/></td></tr>
+      <tr><td>Study leave</td><td><input type="number" min="0" id="leave_study" value="0"/></td></tr>
+      <tr><td>Medical / Maternity leave</td><td><input type="number" min="0" id="leave_medical" value="0"/></td></tr>
+      <tr><td>Leave without pay / Extraordinary leave</td><td><input type="number" min="0" id="leave_lwp" value="0"/></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card" id="sec-qual">
+  <h2><span class="badge">9–10</span> Additional qualification &amp; faculty development</h2>
+  <h3>9. Additional qualification acquired during the year</h3>
+  <table class="data"><thead><tr><th>Degree / Exam</th><th>Month and year</th><th>Discipline</th><th>Score (if any)</th><th>Proof</th></tr></thead><tbody id="qualBody"></tbody></table>
+  <button type="button" class="add-row-btn" onclick="addQualRow()">+ Add qualification</button>
+  <h3>10. Professional / faculty development programme / refresher courses attended</h3>
+  <table class="data"><thead><tr><th>#</th><th>Name of programme / course</th><th>Duration</th><th>Place</th><th>Sponsoring agency</th><th>Proof</th></tr></thead><tbody id="fdpBody"></tbody></table>
+  <button type="button" class="add-row-btn" onclick="addFdpRow()">+ Add programme</button>
+</section>
+
+<section class="card" id="sec-pub">
+  <h2><span class="badge">11–12</span> Publications &amp; other information</h2>
+  <p class="note">List up to five most significant publications during the assessment period. Attach copies / first pages as proof.</p>
+  <table class="data"><thead><tr><th>#</th><th>Title of paper</th><th>Journal / Publisher</th><th>Date, IF &amp; Quartile</th><th>Vol., no. &amp; pages</th><th>Proof</th></tr></thead><tbody id="pubBody"></tbody></table>
+  <button type="button" class="add-row-btn" onclick="addPubRow()">+ Add publication</button>
+  <h3>12. Any other relevant information pertaining to profession</h3>
+  <textarea id="otherInfo" placeholder="Write NIL if none…"></textarea>
+  <div class="field" style="margin-top:.4rem"><label>Supporting proof (optional)</label><input type="file" id="otherInfoFile" accept=".pdf,.jpg,.jpeg,.png,.webp"/><div class="file-name" id="fname_otherInfo"></div></div>
+</section>
+
+<section class="card" id="sec-plans">
+  <h2><span class="badge">17</span> Future plans</h2>
+  <p class="note">Brief outline of prospective plans for teaching and research &amp; innovation.</p>
+  <div class="field"><label for="planTeaching">I) Teaching</label><textarea id="planTeaching"></textarea></div>
+  <div class="field" style="margin-top:.5rem"><label for="planResearch">II) Research and innovation</label><textarea id="planResearch"></textarea></div>
+  <div class="field" style="margin-top:.5rem"><label for="planOther">III) Any other</label><textarea id="planOther"></textarea></div>
+</section>
+
+<div id="sec-I">
+  <div class="cat-head"><h2>Category I · Teaching, learning &amp; evaluation related activities</h2><span class="cap-pill">Max 200</span></div>
+  <div class="cat-body">
+    <p class="note">Normally load: Asst. Prof. 16 hrs / Assoc. Prof. 14 hrs / Professor 12 hrs / HoD–Dean 8 hrs. Marks based on % of load taken and classes engaged. Documentary proofs mandatory.</p>
+    <div class="item-block">
+      <div class="item-title">1. Percentage of lectures / practical / tutorials / projects conducted</div>
+      <div class="item-hint">[(No. conducted ÷ allocated) × 100] · Max 100 · Verify from EMS</div>
+      <div class="item-row">
+        <div class="field"><label>Self score</label><input type="number" min="0" max="100" step="0.5" class="pts" data-cat="I" id="pts_i1" value="0"/></div>
+        <div class="field"><label>Proof (EMS extract / attendance)</label><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="i1" class="file-in"/><div class="file-name" id="fname_i1"></div></div>
+        <div class="field"><label>Notes</label><input type="text" id="note_i1" placeholder="Optional"/></div>
+      </div>
+    </div>
+    <h3>Use of participatory &amp; innovative teaching-learning methodologies</h3>
+    <div id="catIItems"></div>
+    <h3>(iv) Results analysis</h3>
+    <p class="note">Per course: Pass % (A) up to 3 marks + students with &gt;B+ (B) up to 2 marks. Scaled total max 25.</p>
+    <table class="data"><thead><tr><th>Course</th><th>Course title</th><th>Pass % marks (A)</th><th>&gt;B+ marks (B)</th><th>Self pts</th><th>Proof</th></tr></thead><tbody id="resultsBody"></tbody></table>
+    <button type="button" class="add-row-btn" onclick="addResultRow()">+ Add course</button>
+    <div class="item-row" style="margin-top:.5rem"><div class="field"><label>Results total (max 25)</label><input type="number" min="0" max="25" step="0.5" class="pts" data-cat="I" id="pts_i_results" value="0"/></div></div>
+    <div class="subtotal">Category I total (capped at 200)<span class="val" id="scoreI">0</span><span class="capped" id="capNoteI"></span></div>
+  </div>
+</div>
+
+<div id="sec-II">
+  <div class="cat-head"><h2>Category II · Research and innovation</h2><span class="cap-pill">Max 300</span></div>
+  <div class="cat-body">
+    <p class="note">Self-assess objectively per sub-criteria. Total limited to 300. Multi-author: 1–3 authors 100% each; 4–6 authors 60%; 7+ authors 40%. PI/Guide gets 70% of project/thesis points.</p>
+    <div id="catIIItems"></div>
+    <div class="subtotal">Category II total (capped at 300)<span class="val" id="scoreII">0</span><span class="capped" id="capNoteII"></span></div>
+  </div>
+</div>
+
+<div id="sec-III">
+  <div class="cat-head"><h2>Category III · Co-curricular, extension &amp; professional development</h2><span class="cap-pill">Max 100</span></div>
+  <div class="cat-body">
+    <p class="note">Level of involvement: University 100%, School 75%, Department 50%. Conference: Convener 100%, Co-convener/Org. Secy 55%, Member 25%.</p>
+    <div id="catIIIItems"></div>
+    <div class="subtotal">Category III total (capped at 100)<span class="val" id="scoreIII">0</span><span class="capped" id="capNoteIII"></span></div>
+  </div>
+</div>
+
+<div id="sec-IV">
+  <div class="cat-head"><h2>Category IV · Institutional commitments, society, admissions, CDC/CRC &amp; general attributes</h2><span class="cap-pill">Max 100</span></div>
+  <div class="cat-body">
+    <p class="note">Assess by level of involvement and number of days. University 100% / School 75% / Dept 50%.</p>
+    <div id="catIVItems"></div>
+    <div class="subtotal">Category IV total (capped at 100)<span class="val" id="scoreIV">0</span><span class="capped" id="capNoteIV"></span></div>
+  </div>
+</div>
+
+<section class="card" id="sec-summary">
+  <h2><span class="badge">Σ</span> Faculty performance appraisal summary</h2>
+  <table class="summary-table">
+    <thead><tr><th>#</th><th>Category</th><th>Max</th><th>Self-appraisal (capped)</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Teaching, learning &amp; evaluation related activities</td><td>200</td><td id="sumI">0</td></tr>
+      <tr><td>2</td><td>Research and innovation</td><td>300</td><td id="sumII">0</td></tr>
+      <tr><td>3</td><td>Co-curricular, extension &amp; professional development</td><td>100</td><td id="sumIII">0</td></tr>
+      <tr><td>4</td><td>Institutional commitments / society / admissions / CDC / CRC &amp; attributes</td><td>100</td><td id="sumIV">0</td></tr>
+      <tr class="total-row"><td></td><td>TOTAL</td><td>700</td><td id="grandTotal">0</td></tr>
+    </tbody>
+  </table>
+  <div class="band-box">
+    Performance %: <strong id="perfPct">0%</strong> &nbsp;·&nbsp; Indicative decision band: <strong id="bandLabel">—</strong>
+    <div style="margin-top:.4rem;font-size:.8rem;color:var(--muted)">&lt;40% → No increment &nbsp;|&nbsp; 40–65% → One increment &nbsp;|&nbsp; &gt;65% → Two increments and/or incentive</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="badge">+</span> Additional notes</h2>
+  <textarea id="additionalNotes" rows="4" placeholder="Any extra remarks for the reporting officer…"></textarea>
+</section>
+
+<section class="card" id="submitSection">
+  <h2><span class="badge">✓</span> Declaration &amp; submit</h2>
+  <div class="declare">
+    <input type="checkbox" id="declareCheck" required/>
+    <label for="declareCheck" style="text-transform:none;font-weight:400;color:var(--text);letter-spacing:0">I certify that the information provided is correct as per records available with the University and/or documents enclosed along with this filled-in proforma. Documentary proofs are attached for claims under each category.</label>
+  </div>
+  <div class="grid-2">
+    <div class="field"><label for="place">Place</label><input type="text" id="place"/></div>
+    <div class="field"><label for="signDate">Date</label><input type="date" id="signDate"/></div>
+  </div>
+  <div class="btn-row">
+    <button type="button" class="btn btn-primary" onclick="submitOnline()">Submit online</button>
+    <button type="button" class="btn btn-teal" onclick="downloadPackage()">Download submission package (ZIP)</button>
+    <button type="button" class="btn btn-secondary" onclick="window.print()">Print / Save PDF</button>
+  </div>
+  <div class="status info show">Tip: Use <strong>Download submission package</strong> for a ZIP with JSON data + all proof files. Email it to HOD/admin, or use <strong>Submit online</strong> if the access key is set.</div>
+  <div class="status" id="resultBox"></div>
+</section>
+</form>
+<footer>Manav Rachna · Faculty Performance Appraisal Proforma (Form 1594) · Evidence-based · For internal use</footer>
+</div>
+<script>
+const CAPS={I:200,II:300,III:100,IV:100};
+const fileStore={};
+const RATING_OPTS='<option value="0">Select</option><option value="10">Outstanding — 10</option><option value="7">Very Good — 7</option><option value="5">Good — 5</option><option value="3">Average — 3</option><option value="1">Modest — 1</option>';
+const CAT_I_RATED=[
+  {id:"i2",title:"2. Teaching innovation including innovative courses / student-centric pedagogies developed and implemented",max:10},
+  {id:"i3",title:"3. Identification of advanced / slow learners and initiatives taken",max:10},
+  {id:"i4",title:"4. Preparation of new teaching learning materials / course",max:10},
+  {id:"i5",title:"5. Student feedback on quality of classroom teaching and students' interaction",hint:"Average of actual feedback on EMS scaled to 15 marks",max:15,free:true},
+  {id:"i6",title:"6. Continuous assessment completed and uploaded on EMS within notified timelines",max:10},
+  {id:"i7",title:"7. Use of ICT in class delivery (PPT, modern ICT, software, e-platforms)",max:10},
+  {id:"i8",title:"8. Effective teaching (lesson plan, problem-solving, case studies, questioning, assimilation)",max:10}
+];
+const CAT_II=[
+  {id:"ii1",title:"1. Research paper in peer-reviewed / UGC-CARE / Scopus / WoS / PubMed",hint:"Q1:20 · Q2:15 · Q3:10 · Q4:05 per paper",max:300},
+  {id:"ii2a_idx",title:"2(a). Books / chapters authored — International/National indexed publisher",hint:"15 per book/chapter",max:300},
+  {id:"ii2a_non",title:"2(a). Books / chapters authored — non-indexed publisher",hint:"10 per book/chapter",max:300},
+  {id:"ii2b_idx",title:"2(b). Books edited — indexed publisher",hint:"10 per book",max:300},
+  {id:"ii2b_non",title:"2(b). Books edited — non-indexed publisher",hint:"05 per book",max:300},
+  {id:"ii2c",title:"2(c). Translation works (Indian / foreign languages) — book / chapter",hint:"04 per book/chapter",max:300},
+  {id:"ii3",title:"3. ICT mediated course / content (e-PG Pathshala, SWAYAM, MOOC, CEC, Govt, LMS)",hint:"10 per course · LMS 05",max:300},
+  {id:"ii4_phd",title:"4(a). Research guidance — Ph.D. awarded",hint:"10 per degree (no marks for submitted only)",max:300},
+  {id:"ii4_pg",title:"4(a). Research guidance — P.G. dissertation awarded",hint:"03 per degree",max:300},
+  {id:"ii4_proj",title:"4(b). Research project sanctioned (external)",hint:">1 Cr:50 · >50L:25 · >10L:10 · <10L: 1 per Lakh",max:300},
+  {id:"ii4_cons",title:"4(c). Consultancy (external)",hint:"Same bands as research projects",max:300},
+  {id:"ii5",title:"5. Entrepreneurship — successful company incubated / start-up grant",hint:"Incubated:25 · Grant:10",max:300},
+  {id:"ii6",title:"6. Intellectual property rights (IPR) — patents, design, copyright, trademark, GI",hint:"Intl granted+commercial 25 … National design/copyright 5",max:300},
+  {id:"ii7",title:"7. Policy document (by invitation to Intl body / Central / State Govt)",hint:"International 15 · National 10 · State 05",max:300},
+  {id:"ii8",title:"8. Fellowship for research / advanced studies (external)",hint:"International 20 · National 10",max:300},
+  {id:"ii9",title:"9. Invited lectures / resource person / oral paper / full paper in proceedings",hint:"Indexed 10 · Non-indexed 05 · Guest lecture 03",max:300},
+  {id:"ii10",title:"10. New laboratory / centre of excellence established",hint:"10 / 20",max:300},
+  {id:"ii11",title:"11. Recognition / award for research & innovation by external agency",hint:"5",max:300},
+  {id:"ii12",title:"12. Mentor of research project (award / participation)",hint:"Intl award 15 · Natl award 10 · Intl part. 10 · Natl part. 05",max:300}
+];
+const CAT_III=[
+  {id:"iii1",title:"1. Professional / faculty development / refresher courses (≥ 1 week)",hint:"5 marks per programme · Max 15",max:15},
+  {id:"iii2",title:"2. MOOCs certifications (≥ 100 hours)",hint:"5 marks per 100 hours · Max 15",max:15},
+  {id:"iii3",title:"3. Student-related co-curricular activities (welfare, sports, cultural, technical, mentoring)",hint:"5 per semester / per activity · Max 25",max:25},
+  {id:"iii4",title:"4. Contribution via committees (University / School / Dept)",hint:"Univ 10 · School 8 · Dept 3 per committee · Max 50",max:50},
+  {id:"iii5",title:"5. Active role in organising seminar / conference / workshop / FDP",hint:"5 per activity · Max 15",max:15},
+  {id:"iii6",title:"6. International / national immersion · arranging internships",hint:"Intl 10 · Natl premier 5 · Internship 3 · Max 20",max:20},
+  {id:"iii7",title:"7. Administrative responsibilities (HoD / Director / Assoc. Dean / Dean / special assignment)",hint:"20 per responsibility · Max 50 · Attach achievements sheet",max:50}
+];
+const CAT_IV=[
+  {id:"iv1",title:"1. Level of contribution — Placement / Industry–Institute interaction / Alumni affairs",hint:"Up to 10 each area",max:30},
+  {id:"iv2",title:"2. Engagement with communities (rural / tribal / slum etc.)",hint:"Number of days · Max 10",max:10},
+  {id:"iv3",title:"3. Level of engagement with admissions",hint:"Number of days · Max 20",max:20},
+  {id:"iv4",title:"4. General attributes & conduct (punctuality, initiative, responsibility, team, behaviour, integrity, ethics, gender sensitivity)",hint:"3 marks for each attribute · Max 30",max:30},
+  {id:"iv5",title:"5. Any other (specify)",hint:"Max 10",max:10}
+];
+function bindFile(input){input.addEventListener("change",e=>{const id=e.target.dataset.id||e.target.id;const f=e.target.files[0];const nameEl=document.getElementById("fname_"+id);if(f){fileStore[id]=f;if(nameEl)nameEl.textContent=f.name}else{delete fileStore[id];if(nameEl)nameEl.textContent=""}})}
+function makeRatedItem(item,cat){const div=document.createElement("div");div.className="item-block";const isFree=item.free;div.innerHTML=`<div class="item-title">${item.title}</div><div class="item-hint">${item.hint||("Max "+item.max)}</div><div class="item-row"><div class="field"><label>Self score</label>${isFree?`<input type="number" min="0" max="${item.max}" step="0.5" class="pts" data-cat="${cat}" id="pts_${item.id}" value="0"/>`:`<select class="pts rating-select" data-cat="${cat}" id="pts_${item.id}">${RATING_OPTS}</select>`}</div><div class="field"><label>Proof (PDF / image)</label><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${item.id}" class="file-in"/><div class="file-name" id="fname_${item.id}"></div></div><div class="field"><label>Notes</label><input type="text" id="note_${item.id}" placeholder="Optional"/></div></div>`;div.querySelector(".pts").addEventListener("input",recalc);div.querySelector(".pts").addEventListener("change",recalc);bindFile(div.querySelector(".file-in"));return div}
+function makeSimpleItem(item,cat){const div=document.createElement("div");div.className="item-block";div.innerHTML=`<div class="item-title">${item.title}</div><div class="item-hint">${item.hint||""}</div><div class="item-row"><div class="field"><label>Self score</label><input type="number" min="0" max="${item.max||999}" step="0.5" class="pts" data-cat="${cat}" id="pts_${item.id}" value="0"/></div><div class="field"><label>Proof (PDF / image)</label><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${item.id}" class="file-in"/><div class="file-name" id="fname_${item.id}"></div></div><div class="field"><label>Notes / count</label><input type="text" id="note_${item.id}" placeholder="e.g. 2 papers, Q1"/></div></div>`;div.querySelector(".pts").addEventListener("input",recalc);bindFile(div.querySelector(".file-in"));return div}
+function renderCatI(){const box=document.getElementById("catIItems");box.innerHTML="";CAT_I_RATED.forEach(item=>box.appendChild(makeRatedItem(item,"I")))}
+function renderCat(containerId,items,cat){const box=document.getElementById(containerId);box.innerHTML="";items.forEach(item=>box.appendChild(makeSimpleItem(item,cat)))}
+let qualN=0,fdpN=0,pubN=0,resN=0;
+function addQualRow(){qualN++;const id="qual"+qualN;const tr=document.createElement("tr");tr.innerHTML=`<td><input type="text" id="${id}_deg"/></td><td><input type="text" id="${id}_my" placeholder="Mon YYYY"/></td><td><input type="text" id="${id}_disc"/></td><td><input type="text" id="${id}_score"/></td><td><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${id}" class="file-in"/><div class="file-name" id="fname_${id}"></div></td>`;document.getElementById("qualBody").appendChild(tr);bindFile(tr.querySelector(".file-in"))}
+function addFdpRow(){fdpN++;const id="fdp"+fdpN;const tr=document.createElement("tr");tr.innerHTML=`<td>${fdpN}</td><td><input type="text" id="${id}_name"/></td><td><input type="text" id="${id}_dur"/></td><td><input type="text" id="${id}_place"/></td><td><input type="text" id="${id}_agency"/></td><td><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${id}" class="file-in"/><div class="file-name" id="fname_${id}"></div></td>`;document.getElementById("fdpBody").appendChild(tr);bindFile(tr.querySelector(".file-in"))}
+function addPubRow(){if(pubN>=5){alert("Maximum five publications in this list.");return}pubN++;const id="pub"+pubN;const tr=document.createElement("tr");tr.innerHTML=`<td>${pubN}</td><td><input type="text" id="${id}_title"/></td><td><input type="text" id="${id}_journal"/></td><td><input type="text" id="${id}_date" placeholder="Date, IF, Q"/></td><td><input type="text" id="${id}_vol"/></td><td><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${id}" class="file-in"/><div class="file-name" id="fname_${id}"></div></td>`;document.getElementById("pubBody").appendChild(tr);bindFile(tr.querySelector(".file-in"))}
+function addResultRow(){resN++;const id="res"+resN;const tr=document.createElement("tr");tr.innerHTML=`<td>Course ${resN}</td><td><input type="text" id="${id}_title"/></td><td><select id="${id}_a"><option value="0">—</option><option value="3">&gt;90% → 3</option><option value="2">80–89.9% → 2</option><option value="1">70–79.9% → 1</option></select></td><td><select id="${id}_b"><option value="0">—</option><option value="2">&gt;60% → 2</option><option value="1">40–59.9% → 1</option><option value="0">&lt;40% → 0</option></select></td><td><input type="number" min="0" max="5" step="0.5" id="${id}_pts" value="0" readonly/></td><td><input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" data-id="${id}" class="file-in"/><div class="file-name" id="fname_${id}"></div></td>`;document.getElementById("resultsBody").appendChild(tr);const update=()=>{const a=parseFloat(document.getElementById(id+"_a").value)||0;const b=parseFloat(document.getElementById(id+"_b").value)||0;document.getElementById(id+"_pts").value=a+b;let sum=0;document.querySelectorAll("#resultsBody tr").forEach(row=>{const inp=row.querySelector('input[id$="_pts"]');if(inp)sum+=parseFloat(inp.value)||0});document.getElementById("pts_i_results").value=Math.min(25,sum);recalc()};tr.querySelectorAll("select").forEach(s=>s.addEventListener("change",update));bindFile(tr.querySelector(".file-in"))}
+function sumCat(cat){let t=0;document.querySelectorAll('.pts[data-cat="'+cat+'"]').forEach(el=>{t+=parseFloat(el.value)||0});return t}
+function recalc(){const raw={I:sumCat("I"),II:sumCat("II"),III:sumCat("III"),IV:sumCat("IV")};let grand=0;for(const k of["I","II","III","IV"]){const capped=Math.min(raw[k],CAPS[k]);grand+=capped;document.getElementById("score"+k).textContent=capped.toFixed(1);document.getElementById("sum"+k).textContent=capped.toFixed(1);const note=document.getElementById("capNote"+k);note.textContent=raw[k]>CAPS[k]?`(raw ${raw[k].toFixed(1)} → capped)`:""}document.getElementById("grandTotal").textContent=grand.toFixed(1);const pct=(grand/700)*100;document.getElementById("perfPct").textContent=pct.toFixed(1)+"%";let band="—";if(pct<40)band="No increment or incentive";else if(pct<=65)band="One increment";else band="Two increments and/or incentive";document.getElementById("bandLabel").textContent=band}
+function val(id){const el=document.getElementById(id);return el?el.value.trim():""}
+function collectData(){const data={form:"Manav Rachna Faculty Performance Appraisal Proforma (Form 1594)",submittedAt:new Date().toISOString(),particulars:{academicSession:val("academicSession"),periodFrom:val("periodFrom"),periodTo:val("periodTo"),empCode:val("empCode"),fullName:val("fullName"),designation:val("designation"),department:val("department"),qualifications:val("qualifications"),specialization:val("specialization"),scaleOfPay:val("scaleOfPay"),basicPay:val("basicPay"),email:val("email"),phone:val("phone"),joiningDate:val("joiningDate"),leave:{casual:val("leave_casual"),earned:val("leave_earned"),academic:val("leave_academic"),study:val("leave_study"),medical:val("leave_medical"),lwp:val("leave_lwp")}},additionalQualifications:[],fdp:[],publications:[],otherInfo:val("otherInfo"),futurePlans:{teaching:val("planTeaching"),research:val("planResearch"),other:val("planOther")},scores:{I:parseFloat(document.getElementById("scoreI").textContent)||0,II:parseFloat(document.getElementById("scoreII").textContent)||0,III:parseFloat(document.getElementById("scoreIII").textContent)||0,IV:parseFloat(document.getElementById("scoreIV").textContent)||0,grand:parseFloat(document.getElementById("grandTotal").textContent)||0,percent:document.getElementById("perfPct").textContent,band:document.getElementById("bandLabel").textContent},items:{},results:[],additionalNotes:val("additionalNotes"),place:val("place"),signDate:val("signDate"),evidenceFiles:[]};for(let i=1;i<=qualN;i++){const id="qual"+i;if(!document.getElementById(id+"_deg"))continue;data.additionalQualifications.push({degree:val(id+"_deg"),monthYear:val(id+"_my"),discipline:val(id+"_disc"),score:val(id+"_score"),file:fileStore[id]?fileStore[id].name:""})}for(let i=1;i<=fdpN;i++){const id="fdp"+i;if(!document.getElementById(id+"_name"))continue;data.fdp.push({name:val(id+"_name"),duration:val(id+"_dur"),place:val(id+"_place"),agency:val(id+"_agency"),file:fileStore[id]?fileStore[id].name:""})}for(let i=1;i<=pubN;i++){const id="pub"+i;if(!document.getElementById(id+"_title"))continue;data.publications.push({title:val(id+"_title"),journal:val(id+"_journal"),dateIF:val(id+"_date"),vol:val(id+"_vol"),file:fileStore[id]?fileStore[id].name:""})}for(let i=1;i<=resN;i++){const id="res"+i;if(!document.getElementById(id+"_title"))continue;data.results.push({title:val(id+"_title"),passMarks:val(id+"_a"),gradeMarks:val(id+"_b"),points:val(id+"_pts"),file:fileStore[id]?fileStore[id].name:""})}document.querySelectorAll(".pts").forEach(el=>{const id=el.id.replace(/^pts_/,"");data.items[id]={points:el.value,note:(document.getElementById("note_"+id)||{}).value||"",file:fileStore[id]?fileStore[id].name:""}});Object.keys(fileStore).forEach(id=>{data.evidenceFiles.push({id,name:fileStore[id].name,size:fileStore[id].size,type:fileStore[id].type})});return data}
+function validateBasics(){const req=["empCode","fullName","designation","department","email"];for(const id of req){if(!val(id)){document.getElementById(id).focus();return"Please fill required field: "+id}}if(!document.getElementById("declareCheck").checked)return"Please accept the declaration before submitting.";return null}
+function showResult(msg,type){const box=document.getElementById("resultBox");box.className="status show "+type;box.innerHTML=msg}
+async function downloadPackage(){const err=validateBasics();if(err){showResult(err,"err");return}const data=collectData();const zip=new JSZip();zip.file("appraisal_data.json",JSON.stringify(data,null,2));const folder=zip.folder("evidence");for(const[id,file] of Object.entries(fileStore)){const safe=(file.name||"file").replace(/[^\\w.\\-]+/g,"_");folder.file(id+"__"+safe,file)}const blob=await zip.generateAsync({type:"blob"});const a=document.createElement("a");const name=(data.particulars.empCode||"faculty")+"_appraisal_Form1594.zip";a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);const admin=val("adminEmail");showResult("Package downloaded as <strong>"+name+"</strong>."+(admin?" Email it to <strong>"+admin+"</strong> for validation.":" Share the ZIP with your HOD / appraisal office."),"ok")}
+async function submitOnline(){const err=validateBasics();if(err){showResult(err,"err");return}const key=val("web3key");if(!key){showResult("No Web3Forms access key. Use <strong>Download submission package</strong> instead, or ask admin to add a key.","err");return}const data=collectData();const fd=new FormData();fd.append("access_key",key);fd.append("subject","Faculty Appraisal — "+data.particulars.fullName+" ("+data.particulars.empCode+")");fd.append("from_name",data.particulars.fullName);fd.append("email",data.particulars.email);fd.append("message",JSON.stringify(data,null,2));let i=0;for(const[id,file] of Object.entries(fileStore)){fd.append("attachment_"+i,file,id+"__"+file.name);i++}showResult("Submitting… please wait.","info");try{const res=await fetch("https://api.web3forms.com/submit",{method:"POST",body:fd});const json=await res.json();if(json.success)showResult("Submitted successfully. HOD/admin will receive the data and attachments.","ok");else showResult("Submission failed: "+(json.message||"Unknown error")+". Please download the ZIP instead.","err")}catch(e){showResult("Network error. Please download the ZIP package and email it.","err")}}
+function saveDraft(){const data=collectData();const draft={...data,evidenceFiles:data.evidenceFiles.map(f=>({id:f.id,name:f.name}))};localStorage.setItem("mr_appraisal_draft",JSON.stringify(draft));showResult("Draft saved in this browser. Re-attach evidence files before final submit.","ok")}
+function loadDraft(){const raw=localStorage.getItem("mr_appraisal_draft");if(!raw){showResult("No draft found.","err");return}try{const data=JSON.parse(raw);const p=data.particulars||{};["academicSession","periodFrom","periodTo","empCode","fullName","designation","department","qualifications","specialization","scaleOfPay","basicPay","email","phone","joiningDate"].forEach(k=>{if(p[k]!=null&&document.getElementById(k))document.getElementById(k).value=p[k]});if(p.leave)Object.entries(p.leave).forEach(([k,v])=>{const el=document.getElementById("leave_"+k);if(el)el.value=v});if(data.otherInfo)document.getElementById("otherInfo").value=data.otherInfo;if(data.futurePlans){document.getElementById("planTeaching").value=data.futurePlans.teaching||"";document.getElementById("planResearch").value=data.futurePlans.research||"";document.getElementById("planOther").value=data.futurePlans.other||""}if(data.additionalNotes)document.getElementById("additionalNotes").value=data.additionalNotes;if(data.place)document.getElementById("place").value=data.place;if(data.signDate)document.getElementById("signDate").value=data.signDate;if(data.items)Object.entries(data.items).forEach(([id,item])=>{const pts=document.getElementById("pts_"+id);const note=document.getElementById("note_"+id);if(pts)pts.value=item.points||0;if(note)note.value=item.note||""});recalc();showResult("Draft loaded. Please re-attach evidence files.","ok")}catch(e){showResult("Could not load draft.","err")}}
+renderCatI();renderCat("catIIItems",CAT_II,"II");renderCat("catIIIItems",CAT_III,"III");renderCat("catIVItems",CAT_IV,"IV");
+addQualRow();addFdpRow();addPubRow();addResultRow();
+document.getElementById("pts_i1").addEventListener("input",recalc);
+document.getElementById("pts_i_results").addEventListener("input",recalc);
+document.getElementById("otherInfoFile").addEventListener("change",e=>{const f=e.target.files[0];if(f){fileStore.otherInfo=f;document.getElementById("fname_otherInfo").textContent=f.name}else{delete fileStore.otherInfo;document.getElementById("fname_otherInfo").textContent=""}});
+recalc();
+const sk=localStorage.getItem("mr_web3key");const se=localStorage.getItem("mr_adminEmail");
+if(sk)document.getElementById("web3key").value=sk;if(se)document.getElementById("adminEmail").value=se;
+document.getElementById("web3key").addEventListener("change",e=>localStorage.setItem("mr_web3key",e.target.value.trim()));
+document.getElementById("adminEmail").addEventListener("change",e=>localStorage.setItem("mr_adminEmail",e.target.value.trim()));
+</script>
+</body>
+</html>
