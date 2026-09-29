@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Appraisal Admin | Manav Rachna</title>
+<style>
+:root{--navy:#0d3b66;--gold:#c9a227;--border:#c8d4e0;--soft:#f0f5fa;--muted:#5a6a7e;--danger:#b53a3a;--ok:#1d7a4a}
+*{box-sizing:border-box}body{font-family:system-ui,sans-serif;margin:0;background:#f6f8fb;color:#1a2332;font-size:14px}
+header{background:var(--navy);color:#fff;padding:.7rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
+main{max-width:1150px;margin:0 auto;padding:1rem}
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:1rem}
+input,textarea{padding:.45rem .6rem;border:1px solid var(--border);border-radius:7px;font:inherit}
+textarea{width:100%;min-height:90px}
+button{background:var(--navy);color:#fff;border:0;border-radius:7px;padding:.5rem .9rem;font:inherit;cursor:pointer}
+button.alt{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th{background:var(--navy);color:#fff;text-align:left;padding:.45rem}
+td{padding:.4rem .45rem;border-bottom:1px solid var(--border);vertical-align:top}tr:nth-child(even) td{background:var(--soft)}
+.tag{padding:.1rem .5rem;border-radius:999px;font-size:.72rem;background:#e6f5ec;color:var(--ok)}.tag.d{background:#fff3d6;color:#8a6a00}
+.msg{margin-top:.6rem;font-size:.85rem;white-space:pre-wrap}.bad{color:var(--danger)}
+#app{display:none}details a{display:block;font-size:.78rem}
+</style></head><body>
+<header><strong>Faculty Appraisal · Admin</strong><span id="who"></span></header>
+<main>
+<div class="card" id="loginBox"><h3>Admin sign in</h3><p>
+<input id="em" type="email" placeholder="Admin email"/> <input id="pw" type="password" placeholder="Password"/> <button id="go">Sign in</button></p><div class="msg bad" id="lerr"></div></div>
+<div id="app">
+<div class="card"><h3>Add employees</h3><p style="color:var(--muted)">One per line: <code>EMPLOYEE_CODE,password</code> (password at least 6 characters). Employees sign in with the code and the password you set.</p>
+<textarea id="bulk" placeholder="MR1001,Temp@1001&#10;MR1002,Temp@1002"></textarea><p><button id="mk">Create accounts</button></p><div class="msg" id="mkOut"></div></div>
+<div class="card"><h3>Appraisals</h3><p><input id="q" placeholder="Search code, name, department"/> <button class="alt" id="csv">Export CSV</button> <button class="alt" id="rf">Refresh</button></p>
+<div style="overflow-x:auto"><table><thead><tr><th>Code</th><th>Name</th><th>Department</th><th>I</th><th>II</th><th>III</th><th>IV</th><th>Total</th><th>%</th><th>Status</th><th>Last saved</th><th>Proofs</th></tr></thead><tbody id="rows"></tbody></table></div><div class="msg" id="cnt"></div></div>
+</div></main>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {getFirestore,doc,getDoc,setDoc,collection,getDocs} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {firebaseConfig,EMAIL_DOMAIN} from "./firebase-config.js";
+const $=id=>document.getElementById(id),esc=x=>String(x??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let all=[];
+$("go").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("em").value.trim(),$("pw").value)}catch(e){$("lerr").textContent="Sign in failed: "+e.code}};
+onAuthStateChanged(auth,async u=>{if(!u)return;
+ const a=await getDoc(doc(db,"admins",u.uid)).catch(()=>null);
+ if(!a||!a.exists()){$("lerr").textContent="This account is not an admin.";await signOut(auth);return}
+ $("loginBox").style.display="none";$("app").style.display="block";$("who").innerHTML=esc(u.email)+' <button class="alt" id="lo">Log out</button>';$("lo").onclick=()=>signOut(auth).then(()=>location.reload());load()});
+async function load(){const snap=await getDocs(collection(db,"appraisals"));all=snap.docs.map(d=>d.data()).sort((a,b)=>String(a.empCode).localeCompare(b.empCode));draw()}
+const fmt=t=>t?new Date(t).toLocaleString():"—";
+function draw(){const q=$("q").value.toLowerCase();const list=all.filter(r=>[r.empCode,r.fullName,r.department].join(" ").toLowerCase().includes(q));
+ $("rows").innerHTML=list.map(r=>{const s=r.scores||{},files=r.evidenceFiles||[];
+  return `<tr><td>${esc(r.empCode)}</td><td>${esc(r.fullName)}</td><td>${esc(r.department)}</td><td>${s.I??0}</td><td>${s.II??0}</td><td>${s.III??0}</td><td>${s.IV??0}</td><td><b>${s.grand??0}</b></td><td>${esc(s.percent)}</td>
+  <td><span class="tag ${r.status==="submitted"?"":"d"}">${r.status==="submitted"?"Submitted":"In progress"}</span><div style="font-size:.7rem;color:var(--muted)">${r.finalSubmittedAt?fmt(r.finalSubmittedAt):""}</div></td><td>${fmt(r.updatedAt)}</td>
+  <td><details><summary>${files.length} file(s)</summary>${files.map(f=>`<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.id)} · ${esc(f.name)}</a>`).join("")}</details></td></tr>`}).join("");
+ $("cnt").textContent=list.length+" of "+all.length+" appraisals shown"}
+$("q").oninput=draw;$("rf").onclick=load;
+$("csv").onclick=()=>{const h=["Code","Name","Department","Cat I","Cat II","Cat III","Cat IV","Total","Percent","Band","Status","Files","Last saved"];
+ const rows=all.map(r=>{const s=r.scores||{};return[r.empCode,r.fullName,r.department,s.I,s.II,s.III,s.IV,s.grand,s.percent,s.band,r.status||"draft",(r.evidenceFiles||[]).length,fmt(r.updatedAt)]});
+ const csv=[h,...rows].map(l=>l.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="appraisal_summary.csv";a.click()};
+$("mk").onclick=async()=>{const sec=getAuth(initializeApp(firebaseConfig,"sec"));const out=[];
+ for(const line of $("bulk").value.split("\n").map(l=>l.trim()).filter(Boolean)){const [c,...rest]=line.split(",");const code=c.trim().toUpperCase(),pw=rest.join(",").trim();
+  try{const cr=await createUserWithEmailAndPassword(sec,code+"@"+EMAIL_DOMAIN,pw);await setDoc(doc(db,"allowed",cr.user.uid),{code,createdAt:Date.now()});await signOut(sec);out.push("✓ "+code)}
+  catch(e){out.push("✗ "+code+" — "+(e.code==="auth/email-already-in-use"?"already exists":e.code))}}
+ $("mkOut").textContent=out.join("\n")};
+</script></body></html>
